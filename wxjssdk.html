@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>JS-SDK功能预览</title>
+	<style>
+*{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}
+body{font-family:"微软雅黑";font-size:16px;margin:0;padding:0}
+ul,li{list-style:none;padding:0;margin:0}
+a{color:#333;text-decoration:none}
+p{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;padding:0 20px}
+.hide{display:none!important}
+.page{position:relative;padding-top:44px}
+.menu{display:block;width:100%;height:100%;padding-top:0}
+.menu li{padding:10px 20px;border-bottom:1px solid #eee;line-height:20px}
+.menu li.title{font-weight:800;background-image:-moz-linear-gradient(top,#fff,#eee);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#fff),color-stop(1,#eee))}
+.menu li a{display:block;width:100%;height:100%}
+.page-title{height:44px;position:absolute;top:0;left:0;padding:0 10px;line-height:44px;background-image:-moz-linear-gradient(top,#fff,#eee);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#fff),color-stop(1,#eee));width:100%}
+.page-title a{float:left}
+.page-title h3{padding:0;margin:0;width:75%;text-align:center;float:left}
+pre,.functionTestList{font:14px "MicroSoft YaHei","Courier New","Andale Mono",monospace;padding:5px 10px;border:1px solid #ccc;color:#333;background-color:#F8F8F8;line-height:20px;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;border-radius:3px;margin:10px}
+.testBtn{display:block;width:300px;text-align:center;height:44px;line-height:44px;background-color:#047de6;color:#fff;border-radius:5px;margin:20px auto}
+.functionTestList li{ line-height: 30px;border-bottom:1px solid #eee;}
+.functionTestList li:last-child{border-bottom-color: transparent;}
+.pass,.error{display: inline-block;float: right;width: 10px;height: 10px;border-radius: 100px;margin: 10px;}
+.pass{background-color: #029d32;}
+.error{background-color: #f00000;}
+	</style>
+</head>
+<body>
+	<ul class="menu page">
+		<li class="title">其他</li>
+		<li data-page="menuList">可控制菜单列表</li>
+		<li data-page="functionTest">功能测试</li>
+		<li class="title">分享接口</li>
+		<li data-page="onMenuShareTimeline">[分享到朋友圈]onMenuShareTimeline</li>
+		<li data-page="onMenuShareAppMessage">[分享给朋友]onMenuShareAppMessage</li>
+		<li data-page="onMenuShareQQ">[分享到QQ]onMenuShareQQ</li>
+		<li data-page="onMenuShareWeibo">[分享到腾讯微博]onMenuShareWeibo</li>
+		<li class="title">音频接口</li>
+		<li data-page="startRecord">[开始录音]startRecord</li>
+		<li data-page="stopRecord">[停止录音]stopRecord</li>
+		<li data-page="onVoiceRecordEnd">[监听录音自动停止]onVoiceRecordEnd</li>
+		<li data-page="playVoice">[播放录音]playVoice</li>
+		<li data-page="pauseVoice">[暂停播放]pauseVoice</li>
+		<li data-page="stopVoice">[停止播放]stopVoice</li>
+		<li data-page="onVoicePlayEnd">[监听播放自动停止]onVoicePlayEnd</li>
+		<li data-page="uploadVoice">[音频上传]uploadVoice</li>
+		<li data-page="downloadVoice">[音频下载]downloadVoice</li>
+		<li data-page="translateVoice">[语音翻译]translateVoice</li>
+		<li data-page="testAudio">❤❤❤❤❤❤测试用例❤❤❤❤❤❤</li>
+		<li class="title">图像接口</li>
+		<li data-page="chooseImage">[选择图片]chooseImage</li>
+		<li data-page="previewImage">[预览图片]previewImage</li>
+		<li data-page="uploadImage">[上传图片]uploadImage</li>
+		<li data-page="downloadImage">[下载图片]downloadImage</li>
+		<li data-page="scanQRCode">[微信扫一扫]scanQRCode</li>
+		<li data-page="testImage">❤❤❤❤❤❤测试用例❤❤❤❤❤❤</li>
+		<li class="title">设备信息</li>
+		<li data-page="getNetworkType">[获取网络状态]getNetworkType</li>
+		<li class="title">地理位置</li>
+		<li data-page="openLocation">[调用微信地图]openLocation</li>
+		<li data-page="getLocation">[获取当前坐标]getLocation</li>
+		<li class="title">微信界面控制</li>
+		<li data-page="hideOptionMenu">[隐藏右上角菜单]hideOptionMenu</li>
+		<li data-page="showOptionMenu">[显示右上角菜单]showOptionMenu</li>
+		<li data-page="hideMenuItems">[批量隐藏功能按钮]hideMenuItems</li>
+		<li data-page="showMenuItems">[批量显示功能按钮]showMenuItems</li>
+		<li data-page="hideAllNonBaseMenuItem">[隐藏所有非基础按钮]hideAllNonBaseMenuItem</li>
+		<li data-page="showAllNonBaseMenuItem">[显示所有非基础按钮]showAllNonBaseMenuItem</li>
+		<li data-page="closeWindow">[关闭窗口]closeWindow</li>
+		<li class="title">微信小店</li>
+		<li data-page="openProductSpecificView">[跳转微店]openProductSpecificView</li>
+		<li class="title">微信卡券</li>
+		<li data-page="addCard">[添加卡券]addCard</li>
+		<li data-page="chooseCard">[选择卡券]chooseCard</li>
+		<li data-page="openCard">[卡包中的卡券]openCard</li>
+		<li class="title">微信支付</li>
+		<li data-page="chooseWXPay">[发起微信支付]chooseWXPay</li>	
+	</ul>
+	<!-- 分享接口部分 -->
+	<div class="page hide" id="menuList">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>可控菜单列表</h3></div>
+<pre>
+基本类
+  举报: "menuItem:exposeArticle"
+  调整字体: "menuItem:setFont"
+  日间模式: "menuItem:dayMode"
+  夜间模式: "menuItem:nightMode"
+  刷新: "menuItem:refresh"
+  查看公众号（已添加）: "menuItem:profile"
+  查看公众号（未添加）: "menuItem:addContact"
+
+传播类
+  发送给朋友: "menuItem:share:appMessage"
+  分享到朋友圈: "menuItem:share:timeline"
+  分享到QQ: "menuItem:share:qq"
+  分享到Weibo: "menuItem:share:weiboApp"
+  收藏: "menuItem:favorite"
+  分享到FB: "menuItem:share:facebook"
+
+保护类
+  调试: "menuItem:jsDebug"
+  编辑标签: "menuItem:editTag"
+  删除: "menuItem:delete"
+  复制链接: "menuItem:copyUrl"
+  原网页: "menuItem:originPage"
+  阅读模式: "menuItem:readMode"
+  在QQ浏览器中打开: "menuItem:openWithQQBrowser"
+  在Safari中打开: "menuItem:openWithSafari"
+  邮件: "menuItem:share:email"
+  一些特殊公众号: "menuItem:share:brand"
+		</pre>
+	</div>
+	<div class="page hide" id="functionTest">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>功能测试</h3></div>
+		<ul class="functionTestList">
+			
+		</ul>
+		<p>&nbsp;</p>
+	</div>
+	<div class="page hide" id="onMenuShareTimeline">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>分享到朋友圈</h3></div>
+	<p>效果请点击右上角按钮选择分享到朋友圈</p>
+	<p>在wx.ready内执行</p>
+<pre>wx.onMenuShareTimeline({
+    title: '', // 分享标题
+    link: '', // 分享链接
+    imgUrl: '', // 分享图标
+    success: function () { 
+        // 用户确认分享后执行的回调函数
+    },
+    cancel: function () { 
+        // 用户取消分享后执行的回调函数
+    }
+});
+</pre></div>
+	<div class="page hide" id="onMenuShareAppMessage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>分享给朋友</h3></div>
+	<p>效果请点击右上角按钮选择分享给朋友</p>
+	<p>在wx.ready内执行</p>
+<pre>wx.onMenuShareAppMessage({
+	title: '分享给朋友', // 分享标题
+	desc: '获取“分享给朋友”按钮点击状态及自定义分享内容接口', // 分享描述
+	link: '', // 分享链接
+	imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+	type: '', // 分享类型,music、video或link，不填默认为link
+	dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});</pre></div>
+	<div class="page hide" id="onMenuShareQQ">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>分享到QQ</h3></div>
+	<p>需要用户已安装QQ</p>
+	<p>在wx.ready内执行</p>
+<pre>wx.onMenuShareQQ({
+    title: '', // 分享标题
+    desc: '', // 分享描述
+    link: '', // 分享链接
+    imgUrl: '' // 分享图标
+    success: function () { 
+       // 用户确认分享后执行的回调函数
+    },
+    cancel: function () { 
+       // 用户取消分享后执行的回调函数
+    }
+});</pre></div>
+	<div class="page hide" id="onMenuShareWeibo">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>分享到腾讯微博</h3></div>
+	<p>需要用户已安装腾讯微博</p>
+	<p>在wx.ready内执行</p>
+<pre>wx.onMenuShareWeibo({
+    title: '分享给朋友', // 分享标题
+	desc: '获取“分享给朋友”按钮点击状态及自定义分享内容接口', // 分享描述
+	link: '', // 分享链接
+	imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+    success: function () { 
+        // 用户确认分享后执行的回调函数
+        alert("分享成功");
+    },
+    cancel: function () { 
+        // 用户取消分享后执行的回调函数
+        alert("分享失败");
+    }
+});
+</pre></div>
+<!-- 音频接口部分 -->
+	<div class="page hide" id="startRecord">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>开始录音</h3></div>
+<pre>wx.startRecord();
+</pre></div>
+	<div class="page hide" id="stopRecord">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>停止录音</h3></div>
+<pre>wx.stopRecord({
+    success: function (res) {
+        var localId = res.localId;
+    }
+});
+</pre></div>
+	<div class="page hide" id="onVoiceRecordEnd">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>监听录音自动停止</h3></div>
+<pre>wx.onVoiceRecordEnd({
+    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+    complete: function (res) {
+        var localId = res.localId; 
+    }
+});
+</pre></div>
+	<div class="page hide" id="playVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>开始播放</h3></div>
+<pre>wx.playVoice({
+    localId: '' // 需要播放的音频的本地ID，由stopRecord接口获得
+});
+</pre></div>
+	<div class="page hide" id="pauseVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>暂停播放</h3></div>
+<pre>wx.pauseVoice({
+    localId: '' // 需要暂停的音频的本地ID，由stopRecord接口获得
+});
+</pre></div>
+	<div class="page hide" id="stopVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>停止播放</h3></div>
+<pre>wx.stopVoice({
+    localId: '' // 需要停止的音频的本地ID，由stopRecord接口获得
+});
+</pre></div>
+	<div class="page hide" id="onVoicePlayEnd">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>监听播放自动停止</h3></div>
+<pre>wx.onVoicePlayEnd({
+    success: function (res) {
+        var localId = res.localId; // 返回音频的本地ID
+    }
+});
+</pre></div>
+	<div class="page hide" id="uploadVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>上传音频</h3></div>
+<pre>wx.uploadVoice({
+    localId: '', // 需要上传的音频的本地ID，由stopRecord接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: function (res) {
+        var serverId = res.serverId; // 返回音频的服务器端ID
+    }
+});
+</pre></div>
+	<div class="page hide" id="downloadVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>下载音频</h3></div>
+<pre>wx.downloadVoice({
+    serverId: '', // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+    success: function (res) {
+        var localId = res.localId; // 返回音频的本地ID
+    }
+});
+</pre></div>
+	<div class="page hide" id="translateVoice">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>音频识别</h3></div>
+<pre>wx.translateVoice({
+   localId: '', // 需要识别的音频的本地Id，由录音相关接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+    success: function (res) {
+        alert(res.translateResult); // 语音识别的结果
+    }
+});
+</pre></div>
+	<div class="page hide" id="testAudio">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>音频测试用例</h3></div>
+		<p class="audioId" style="text-align:center">本地音频ID：<span></span></p>
+		<p class="audioIdServe" style="text-align:center">线上音频ID：<span></span></p>
+		<div class="testBtn startAudioBtn">开始录音</div>
+		<div class="testBtn endAudioBtn" style="background:#f00000">停止录音</div>
+		<p style="text-align:center">-----音频控制-----</p>
+		<div class="playAudioBtn testBtn">播放录音</div>
+		<div class="pauseAudioBtn testBtn" style="background:#f80">暂停播放</div>
+		<div class="stopAudioBtn testBtn" style="background:#f00000">停止播放</div>
+		<p style="text-align:center">-----音频上传&下载-----</p>
+		<div class="uploadAudioBtn testBtn">上传音频</div>
+		<div class="downAudioBtn testBtn" style="background:#f80">下载音频</div>
+		<p style="text-align:center">-----音频识别-----</p>
+		<div class="translateAudio testBtn">音频识别</div>
+		<p>&nbsp;</p>
+	</div>
+<!-- 图像接口部分 -->
+	<div class="page hide" id="chooseImage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>选择图片</h3></div>
+<p>这里图片可以多选，返回的localIds是json转为的字符串，在previewImage的时候需要转成数组操作。</p>
+<pre>wx.chooseImage({
+    success: function (res) {
+        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+    }
+});
+</pre></div>
+	<div class="page hide" id="previewImage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>预览图片</h3></div>
+<pre>wx.previewImage({
+    current: '', // 当前显示的图片链接
+    urls: [] // 需要预览的图片链接列表
+});
+</pre></div>
+	<div class="page hide" id="uploadImage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>上传图片</h3></div>
+	<p>原生接口不支持多图上传，本例中已修正本问题</p>
+<pre>wx.uploadImage({
+    localId: '', // 需要上传的图片的本地ID，由chooseImage接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+    success: function (res) {
+        var serverId = res.serverId; // 返回图片的服务器端ID
+    }
+});
+</pre></div>
+	<div class="page hide" id="downloadImage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>下载图片</h3></div>
+	<p>原生接口不支持多图下载，本例中已修正本问题</p>
+<pre>wx.downloadImage({
+    serverId: '', // 需要下载的图片的服务器端ID，由uploadImage接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+    success: function (res) {
+        var localId = res.localId; // 返回图片下载后的本地ID
+    }
+});
+</pre></div>
+	<div class="page hide" id="scanQRCode">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>微信扫一扫</h3></div>
+<pre>wx.scanQRCode({
+    desc: 'scanQRCode desc',
+    needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+    success: function (res) {
+    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+}
+});
+</pre></div>
+	<div class="page hide" id="testImage">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>图片测试用例</h3></div>
+		<p class="imageId" style="text-align:center">本地图片ID：<span></span></p>
+		<p class="imageIdServe" style="text-align:center">线上图片ID：<span></span></p>
+		<div class="testBtn chooseImageBtn">选择图片</div>
+		<div class="testBtn previewImageBtn" style="background:#f80">预览图片</div>
+		<p style="text-align:center">-----音图片上传&下载-----</p>
+		<div class="uploadImageBtn testBtn">上传图片</div>
+		<div class="downImageBtn testBtn" style="background:#f80">下载图片</div>
+		<p style="text-align:center">-----微信扫一扫-----</p>
+		<div class="qcodeBtn testBtn">微信扫一扫</div>
+		<p>&nbsp;</p></div>
+<!-- 网络状态接口部分 -->
+	<div class="page hide" id="getNetworkType">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>获取网络状态</h3></div>
+<pre>wx.getNetworkType({
+    success: function (res) {
+        var networkType = res.networkType; // 返回网络类型2g，3g，4g，wifi
+    }
+});
+</pre>
+<div class="testBtn getNetwork">获取网络状态</div>
+</div>
+<!-- 地理位置接口部分 -->
+	<div class="page hide" id="openLocation">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>调用微信地图</h3></div>
+	<p>调用本地图序要指定坐标或者[获取当前坐标]</p>
+<pre>wx.openLocation({
+    latitude: 0, // 纬度，浮点数，范围为90 ~ -90
+    longitude: 0, // 经度，浮点数，范围为180 ~ -180。
+    name: '', // 位置名
+    address: '', // 地址详情说明
+    scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+    infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+});
+</pre><div class="testBtn openLocation">调用地图</div>
+	</div>
+	<div class="page hide" id="getLocation">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>获取当前坐标</h3></div>
+<pre>wx.getLocation({
+    success: function (res) {
+        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        var speed = res.speed; // 速度，以米/每秒计
+        var accuracy = res.accuracy; // 位置精度
+    }
+});
+</pre>
+<p style="text-align:center" class="latitudeText">纬度：<span></span></p>
+<p style="text-align:center" class="longitudeText">经度：<span></span></p>
+<p style="text-align:center" class="speedText">速度：<span></span></p>
+<p style="text-align:center" class="accuracyText">位置精度：<span></span></p>
+<div class="testBtn getLocation">获取地理位置</div></div>
+	<div class="page hide" id="hideOptionMenu">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>隐藏右上角菜单</h3></div>
+<pre>wx.hideOptionMenu();
+</pre><div class="testBtn hideOptionMenu">隐藏右上角菜单</div></div>
+	<div class="page hide" id="showOptionMenu">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>显示右上角菜单</h3></div>
+<pre>wx.showOptionMenu();
+</pre><div class="testBtn showOptionMenu">显示右上角菜单</div></div>
+	<div class="page hide" id="hideMenuItems">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>批量隐藏功能按钮</h3></div>
+<pre>wx.hideMenuItems({
+    menuList: [] // 要隐藏的菜单项，所有menu项见附录3
+});
+</pre><div class="testBtn hideMenuItems">批量隐藏功能按钮</div></div>
+	<div class="page hide" id="showMenuItems">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>批量显示功能按钮</h3></div>
+<pre>wx.showMenuItems({
+    menuList: [] // 要显示的菜单项，所有menu项见附录3
+});
+</pre><div class="testBtn showMenuItems">批量隐藏功能按钮</div></div>
+	<div class="page hide" id="hideAllNonBaseMenuItem">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>隐藏所有非基础按钮</h3></div>
+<pre>wx.hideAllNonBaseMenuItem();
+</pre><div class="testBtn hideAllNonBaseMenuItem">批量隐藏功能按钮</div></div>
+	<div class="page hide" id="showAllNonBaseMenuItem">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>显示所有非基础按钮</h3></div>
+<pre>wx.showAllNonBaseMenuItem();
+</pre><div class="testBtn showAllNonBaseMenuItem">批量显示功能按钮</div></div>
+	<div class="page hide" id="closeWindow">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>关闭当前窗口</h3></div>
+<pre>wx.closeWindow();
+</pre><div class="testBtn closeWindow">关闭当前窗口</div></div>
+	
+<!-- 微店接口部分 -->	
+	<div class="page hide" id="openProductSpecificView">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>跳转微店</h3></div>
+<pre>wx.openProductSpecificView({
+    productId: '', // 商品id
+    viewType: '' // 0.默认值，普通商品详情页1.扫一扫商品详情页2.小店商品详情页
+});
+</pre></div>
+<!-- 卡券接口部分 -->
+	<div class="page hide" id="addCard">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>选择卡券</h3></div>
+	<p>调起适用于门店的卡券列表并获取用户选择列表</p>
+<pre>wx.chooseCard({
+    shopId: '', // 门店Id
+    cardType: '', // 卡券类型
+    cardId: '', // 卡券Id
+    timestamp: 0, // 卡券签名时间戳
+    nonceStr: '', // 卡券签名随机串
+    signType: '', // 签名方式，默认'SHA1'
+    cardSign: '', // 卡券签名，详见附录4
+    success: function (res) {
+        var cardList= res.cardList; // 用户选中的卡券列表信息
+    }
+});
+</pre></div>
+	<div class="page hide" id="chooseCard">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>批量添加卡券</h3></div>
+<pre>wx.addCard({
+    cardList: [{
+        cardId: '',
+        cardExt: ''
+    }], // 需要添加的卡券列表
+    success: function (res) {
+        var cardList = res.cardList; // 添加的卡券列表信息
+    }
+});
+</pre></div>
+	<div class="page hide" id="openCard">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>卡包中的卡券</h3></div>
+<pre>wx.openCard({
+    cardList: [{
+        cardId: '',
+        code: ''
+    }]// 需要打开的卡券列表
+});
+</pre></div>
+<!-- 微信支付接口部分 -->
+	<div class="page hide" id="chooseWXPay">
+	<div class="page-title"><a href="javascript:;" class="jq-fh">< 返回</a><h3>发起微信支付</h3></div>
+<pre>wx.chooseWXPay({
+    timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+    nonceStr: '', // 支付签名随机串，不长于 32 位
+    package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+    signType: '', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+    paySign: '', // 支付签名
+});
+</pre>
+<p>备注：prepay_id 通过微信支付统一下单接口拿到，paySign 采用统一的微信支付 Sign 签名生成方法，注意这里 appId 也要参与签名，appId 与 config 中传入的 appId 一致，即最后参与签名的参数有appId, timeStamp, nonceStr, package, signType。
+</p>
+<p>微信支付统一下单接口文档：<a href="http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_1" target="_blank">http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_1</a>
+</p>
+<p>微信支付签名算法：<a href="http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_3" target="_blank">http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_3</a>
+</p></div>
+</body>
+<script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	//微信配置【*每次跳转都需要初始化一次】
+		
+		wx.config({
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    appId: '{$signPackage["appId"]}', // 必填，公众号的唯一标识
+			timestamp: '{$signPackage["timestamp"]}' , // 必填，生成签名的时间戳
+			nonceStr: '{$signPackage["nonceStr"]}', // 必填，生成签名的随机串
+			signature: '{$signPackage["signature"]}',// 必填，签名，见附录1
+		    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','startRecord','stopRecord','onVoiceRecordEnd','playVoice','pauseVoice','stopVoice','onVoicePlayEnd','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','translateVoice','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		//初始化成功
+		
+		wx.ready(function(){
+			wx.checkJsApi({
+			    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','startRecord','stopRecord','onVoiceRecordEnd','playVoice','pauseVoice','stopVoice','onVoicePlayEnd','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','translateVoice','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+			    success: function(res) {
+			        // 以键值对的形式返回，可用的api值true，不可用为false
+			        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+			        var html = "",
+			        	arr = res["checkResult"];
+			        for(key in arr){
+			        	html+="<li>"+key+":";
+			        	if(arr[key]){
+			        		html+="<em class='pass'></em></li>";
+			        	}else{
+			        		html+="<em class='error'></em></li>"
+			        	}
+			        }
+			        $(".functionTestList").html(html);
+			    }
+			});
+		  	// 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+		  	wx.onMenuShareTimeline({
+			    title: '获取“分享到朋友圈”按钮点击状态及自定义分享内容接口', // 分享标题
+			    link: '', // 分享链接
+			    imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        alert("分享成功");
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			        alert("分享失败");
+			    }
+		  	});
+		  	// 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+		 	wx.onMenuShareAppMessage({
+				title: '分享给朋友', // 分享标题
+				desc: '获取“分享给朋友”按钮点击状态及自定义分享内容接口', // 分享描述
+				link: '', // 分享链接
+				imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+				type: '', // 分享类型,music、video或link，不填默认为link
+				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        alert("分享成功");
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			        alert("分享失败");
+			    }
+			});
+			// 获取“分享到QQ”按钮点击状态及自定义分享内容接口
+			wx.onMenuShareQQ({
+			    title: '分享给朋友', // 分享标题
+				desc: '获取“分享给朋友”按钮点击状态及自定义分享内容接口', // 分享描述
+				link: '', // 分享链接
+				imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        alert("分享成功");
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			        alert("分享失败");
+			    }
+			});
+			// 获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
+			wx.onMenuShareWeibo({
+			    title: '分享给朋友', // 分享标题
+				desc: '获取“分享给朋友”按钮点击状态及自定义分享内容接口', // 分享描述
+				link: '', // 分享链接
+				imgUrl: 'http://vplus.fdc.com.cn/app/resource/components/whd/img/logo.jpg', // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			        alert("分享成功");
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			        alert("分享失败");
+			    }
+			});
+		});
+		//初始化错误
+		wx.error(function(res){
+			alert("jsSDK初始化错误");
+		    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+
+		});
+		
+</script>
+<script>
+	$(function(){
+		$(".page").height($(window).height());
+
+		$(".menu li").click(function(){
+			var name = $(this).attr("data-page");
+			var ele = "#"+name;
+			$(ele).removeClass("hide").siblings(".page").addClass("hide");
+			$('body,html').animate({scrollTop:0},100);
+		});
+
+		$(".jq-fh").click(function(){
+			$(".menu").removeClass("hide").siblings(".page").addClass("hide");
+		})
+		$(".startAudioBtn").click(function(){
+			//开始录音
+			wx.startRecord();
+			//超时触发
+			wx.onVoiceRecordEnd({
+			    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+			    complete: function (res) {
+			        var localId = res.localId; 
+			         alert("音频ID："+localId+";录音超时。");
+			         $(".audioId span").text(localId);
+			    }
+			});
+		})
+		$(".endAudioBtn").click(function(){
+			//手动停止录音
+			wx.stopRecord({
+			    success: function (res) {
+			        var localId = res.localId;
+			        $(".audioId span").text(localId);
+			    }
+			});
+		})
+		$(".playAudioBtn").click(function(){
+			//播放音频
+			var audioId =  $(".audioId span").text();
+			wx.playVoice({
+			    localId: audioId // 需要播放的音频的本地ID，由stopRecord接口获得
+			});
+			//监听自动停止
+			wx.onVoicePlayEnd({
+			    success: function (res) {
+			        var localId = res.localId; // 返回音频的本地ID
+			        alert("已播放完成。")
+			    }
+			});
+		})
+		$(".pauseAudioBtn").click(function(){
+			//播放音频
+			var audioId =  $(".audioId span").text();
+			wx.pauseVoice({
+			    localId: audioId // 需要播放的音频的本地ID，由stopRecord接口获得
+			});
+		})
+		$(".stopAudioBtn").click(function(){
+			//播放音频
+			var audioId =  $(".audioId span").text();
+			wx.stopVoice({
+			    localId: audioId // 需要播放的音频的本地ID，由stopRecord接口获得
+			});
+		})
+		$(".uploadAudioBtn").click(function(){
+			//上传到微信服务器
+			var audioId =  $(".audioId span").text();
+			wx.uploadVoice({
+			    localId: audioId, // 需要上传的音频的本地ID，由stopRecord接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			        success: function (res) {
+			        var serverId = res.serverId; // 返回音频的服务器端ID
+			        alert("上传成功。服务器端ID为："+serverId);
+			        $(".audioIdServe span").text(serverId);
+			    }
+			});
+		})
+		$(".downAudioBtn").click(function(){
+			//从微信服务器下载
+			var audioIdServe =  $(".audioIdServe span").text();
+			wx.downloadVoice({
+			    serverId: audioIdServe, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			    success: function (res) {
+			        var localId = res.localId; // 返回音频的本地ID
+			         alert("下载成功。本地ID为："+localId);
+			        $(".audioId span").text(localId);
+			    }
+			});
+		})
+		$(".translateAudio").click(function(){
+			//语音识别
+			var audioId =  $(".audioId span").text();
+			wx.translateVoice({
+			    localId: audioId, // 需要识别的音频的本地Id，由录音相关接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			    success: function (res) {
+			        alert(res.translateResult); // 语音识别的结果
+			    }
+			});
+		})
+		$(".getNetwork").click(function(){
+			//获取网络状态
+			wx.getNetworkType({
+			    success: function (res) {
+			        var networkType = res.networkType; // 返回网络类型2g，3g，4g，wifi
+			        alert("网络状态："+networkType);
+			    }
+			});
+		})
+		$(".getLocation").click(function(){
+			wx.getLocation({
+			    success: function (res) {
+			        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+			        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+			        var speed = res.speed; // 速度，以米/每秒计
+			        var accuracy = res.accuracy; // 位置精度
+			        $(".latitudeText span").text(latitude);
+			        $(".longitudeText span").text(longitude);
+			        $(".speedText span").text(speed);
+			        $(".accuracyText span").text(accuracy);
+			    }
+			});
+		})
+		$(".openLocation").click(function(){
+			wx.openLocation({
+			    latitude: 50, // 纬度，浮点数，范围为90 ~ -90
+			    longitude: 50, // 经度，浮点数，范围为180 ~ -180。
+			    name: '自定义坐标', // 位置名
+			    address: '[50,50]', // 地址详情说明
+			    scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+			    infoUrl: 'www.baidu.com' // 在查看位置界面底部显示的超链接,可点击跳转
+			});
+		})
+		$(".chooseImageBtn").click(function(){
+			//选择图片
+			wx.chooseImage({
+			    success: function (res) {
+			        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+			        $(".imageId span").text(localIds);
+			    }
+			});
+		})
+		$(".previewImageBtn").click(function(){
+			//预览图片
+			var imageIds = $(".imageId span").text();
+			var imageArr = imageIds.split(",");
+			var _current = imageArr[0]+"";
+			alert(_current);
+			wx.previewImage({
+			    current: _current, // 当前显示的图片链接
+			    urls: imageArr // 需要预览的图片链接列表
+			});
+		})
+	
+		$(".uploadImageBtn").click(function(){
+			//上传到微信服务器，逐个上传
+			var imageIds =  $(".imageId span").text();
+			var imageArr = imageIds.split(",");
+			var serverIds = "";
+			var i = 0;
+			var len = imageArr.length;
+			function uploadImg(index){
+				if(index<len){
+					var thisUrl = imageArr[index];
+					wx.uploadImage({
+					    localId: thisUrl, // 需要上传的图片的本地ID，由chooseImage接口获得
+					    isShowProgressTips: 1, // 默认为1，显示进度提示
+					        success: function (res) {
+						        var serverId = res.serverId; // 返回图片的服务器端ID
+						        if(index == len-1){
+						        	serverIds = serverIds + serverId;
+						        	$(".imageIdServe span").text(serverIds);
+						        }else{
+						        	serverIds = serverIds + serverId+",";
+						        	uploadImg(index+1);
+						        }
+						        
+						    }
+					});
+				}
+			}
+			uploadImg(i);
+		})
+		$(".downImageBtn").click(function(){
+			//从微信服务器下载
+			var imageIdServes =  $(".imageIdServe span").text();
+			var imageArr = imageIdServes.split(",");
+			var localIds = "";
+			var i = 0;
+			var len = imageArr.length;
+			function downloadImg(index){
+				if(index<len){
+					var thisUrl = imageArr[index];
+					wx.downloadImage({
+					    serverId: thisUrl, // 需要下载的图像的服务器端ID，由uploadImage接口获得
+					    isShowProgressTips: 1, // 默认为1，显示进度提示
+					    success: function (res) {
+					        var localId = res.localId; // 返回图像的本地ID
+					        if(index == len-1){
+					        	localIds = localIds + localId;
+					        	$(".imageId span").text(localIds);
+					        }else{
+					        	localIds = localIds + localId+",";
+					        	downloadImg(index+1);
+					        }
+					    }
+					});
+				}
+			}
+			downloadImg(i);
+		})
+		$(".qcodeBtn").click(function(){
+			wx.scanQRCode({
+			    desc: '这里的文字可以自定义',
+			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+			    success: function (res) {
+				    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				    alert("扫描结果："+result+"，如果需要微信处理结果需要把'needResult'参数设为0。");
+				}
+			});
+		})
+
+		$(".hideOptionMenu").click(function(){
+			wx.hideOptionMenu();
+		})
+		$(".showOptionMenu").click(function(){
+			wx.showOptionMenu();
+		})
+		$(".hideMenuItems").click(function(){
+			wx.hideMenuItems({
+			    menuList: ["menuItem:exposeArticle","menuItem:setFont","menuItem:dayMode","menuItem:nightMode","menuItem:refresh","menuItem:profile","menuItem:addContact","menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook","menuItem:jsDebug","menuItem:editTag","menuItem:delete","menuItem:copyUrl","menuItem:originPage","menuItem:readMode","menuItem:openWithQQBrowser","menuItem:openWithSafari","menuItem:share:email","menuItem:share:brand"] // 要隐藏的菜单项，所有menu项见附录3
+			});
+		})
+		$(".showMenuItems").click(function(){
+			wx.showMenuItems({
+			    menuList: ["menuItem:exposeArticle","menuItem:setFont","menuItem:dayMode","menuItem:nightMode","menuItem:refresh","menuItem:profile","menuItem:addContact","menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook","menuItem:jsDebug","menuItem:editTag","menuItem:delete","menuItem:copyUrl","menuItem:originPage","menuItem:readMode","menuItem:openWithQQBrowser","menuItem:openWithSafari","menuItem:share:email","menuItem:share:brand"] // 要显示的菜单项，所有menu项见附录3
+			});
+		})
+		$(".hideAllNonBaseMenuItem").click(function(){
+			wx.hideAllNonBaseMenuItem();
+		})
+		$(".showAllNonBaseMenuItem").click(function(){
+			wx.showAllNonBaseMenuItem();
+		})
+		$(".closeWindow").click(function(){
+			wx.closeWindow();
+		})
+	})
+</script>
+</html>
